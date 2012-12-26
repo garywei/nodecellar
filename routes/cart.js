@@ -43,15 +43,12 @@ exports.findBySku = function(req, res) {
         Carted : []
     });
     
-
     var ItemModel = mongoose.model('Item', ItemSchema);
 
     var ret;
     ItemModel.find({'Sku' : req.params.id}, function (err,items) {      
         res.send(items);
     })
-    
-    
 };
 
 
@@ -67,14 +64,6 @@ exports.ProvisionItems = function(req, res) {
         Description : String,
         Carted : []
     });
-    
-    //var CartSchema = new Schema({
-    //    Id: {type : Number}
-    //  , Status: {type : String, default : 'Active', trim : true}
-    //  , LineItems: [] // Item sku, quantity, 
-    //  , CreatedDate  : {type : Date, default : Date.now}
-    //  , ModifiedDate  : {type : Date, default : Date.now}
-    //});
     
     var ItemModel = mongoose.model('Item', ItemSchema);
     
@@ -106,6 +95,36 @@ exports.ProvisionItems = function(req, res) {
       //console.log(items);
         res.send(items);
     })
+};
 
+exports.ProvisionCarts = function(req, res) {
+    console.log('ProvisionCarts');
+    require('../models/cart.js');
+    var mongoose = require('mongoose')
+      , CartModel = mongoose.model('CartModel');
 
+    var cart1 = new CartModel({
+        hgId : 'hgId1',
+        UserId : 'UserId1'
+    });
+    
+    res.send(cart1);
+    
+    //var item1 = new ItemModel({
+    //        Sku : '1234',
+    //        Quanity : 5,
+    //        Description : 'glasses',
+    //        Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
+    //    });
+    //
+    //item1.save(function (err, item1) {
+    //  if (err) // TODO handle the error
+    //      console.log('save failed');
+    //});    
+    
+    
+    //ItemModel.find(function (err,items) {
+    //  //console.log(items);
+    //    res.send(items);
+    //})
 };
