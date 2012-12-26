@@ -30,7 +30,7 @@ exports.findAll = function(req, res) {
     db.close();
 };
 
-exports.findById = function(req, res) {
+exports.findBySku = function(req, res) {
 
     var mongoose = require('mongoose')
     , Schema = mongoose.Schema;
@@ -42,34 +42,23 @@ exports.findById = function(req, res) {
         Carted : []
     });
     
-    var CartSchema = new Schema({
-        Id: {type : Number}
-      , Status: {type : String, default : 'Active', trim : true}
-      , LineItems: [] // Item sku, quantity, 
-      , CreatedDate  : {type : Date, default : Date.now}
-      , ModifiedDate  : {type : Date, default : Date.now}
-    });
-    
-    var ItemModel = mongoose.model('Item', ItemSchema);
-    var item = new ItemModel({
-            Sku : '1234',
-            Quanity : 5,
-            Description : 'glasses',
-            Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
-        });
-    
-    mongoose.connect('mongodb://localhost:27017/cart');    
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function callback () {
-    });
-    
-    item.save(function (err, item) {
-      if (err) // TODO handle the error
-          console.log('save failed');
-    });    
 
-    res.send(item);
+    var ItemModel = mongoose.model('Item', ItemSchema);
+
+    var ret;
+    ItemModel.find(function (err,items) {
+      console.log(items);
+      ret=items;
+    })
+    
+    //mongoose.connect('mongodb://localhost:27017/cart');    
+    //var db = mongoose.connection;
+    //db.on('error', console.error.bind(console, 'connection error:'));
+    //db.once('open', function callback () {
+    //});
+    
+
+    res.send(items);
 };
 
 
@@ -109,21 +98,26 @@ exports.ProvisionItems = function(req, res) {
             Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
         });
     
-    mongoose.connect('mongodb://localhost:27017/cart');    
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function callback () {
-    });
+    //mongoose.connect('mongodb://localhost:27017/cart');    
+    //var db = mongoose.connection;
+    //db.on('error', console.error.bind(console, 'connection error:'));
+    //db.once('open', function callback () {
+    //});
     
     item1.save(function (err, item1) {
       if (err) // TODO handle the error
           console.log('save failed');
     });    
-
+    
     item2.save(function (err, item2) {
       if (err) // TODO handle the error
           console.log('save failed');
-    });    
+    });
+    
+    ItemModel.find(function (err,items) {
+      console.log(items);
+        res.send(items);
+    })
 
-    res.send(item2);
+
 };
