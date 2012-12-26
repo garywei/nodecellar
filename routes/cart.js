@@ -101,30 +101,25 @@ exports.ProvisionCarts = function(req, res) {
     console.log('ProvisionCarts');
     require('../models/cart.js');
     var mongoose = require('mongoose')
-      , CartModel = mongoose.model('CartModel');
+      , CartModel = mongoose.model('Cart');
 
     var cart1 = new CartModel({
-        hgId : 'hgId1',
-        UserId : 'UserId1'
+        hgId : '1',
+        UserId : 'UserId1',
+        LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
     });
     
-    res.send(cart1);
-    
-    //var item1 = new ItemModel({
-    //        Sku : '1234',
-    //        Quanity : 5,
-    //        Description : 'glasses',
-    //        Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
-    //    });
-    //
-    //item1.save(function (err, item1) {
-    //  if (err) // TODO handle the error
-    //      console.log('save failed');
-    //});    
+    CartModel.find({'hgId' : cart1.hgId}, function (err,items) {
+        if (items.length>0){
+            res.send(items);
+        }
+        else{
+            cart1.save(function (err, cart1) {
+              if (err) // TODO handle the error
+                  console.log('save failed');
+            });            
+        }
+    })
     
     
-    //ItemModel.find(function (err,items) {
-    //  //console.log(items);
-    //    res.send(items);
-    //})
 };

@@ -18,4 +18,4 @@ CartSchema.path('UserId').validate(function (UserId) {
 }, 'User Id cannot be blank')
 
 
-mongoose.model('CartModel', CartSchema)
+mongoose.model('Cart', CartSchema);
