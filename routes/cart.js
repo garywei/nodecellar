@@ -55,43 +55,53 @@ exports.findBySku = function(req, res) {
 exports.ProvisionItems = function(req, res) {
     console.log('ProvisionItems');
 
+    require('../models/InventoryItem.js');
     var mongoose = require('mongoose')
     , Schema = mongoose.Schema;
+    
+    InventoryItemModel = mongoose.model('InventoryItem');
         
-    var ItemSchema = new Schema({
-        Sku : String,
-        Quanity : Number,
-        Description : String,
-        Carted : []
-    });
-    
-    var ItemModel = mongoose.model('Item', ItemSchema);
-    
-    var item2 = new ItemModel({
+    var item2 = new InventoryItemModel({
             Sku : '1235',
             Quanity : 7,
             Description : 'gift card',
             Carted : [{CartId : 1, Quanity : 3}, {CartId : 2, Quanity : 1}]
         });
     
-    var item1 = new ItemModel({
+    var item1 = new InventoryItemModel({
             Sku : '1234',
             Quanity : 5,
             Description : 'glasses',
             Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
         });
     
-    item1.save(function (err, item1) {
-      if (err) // TODO handle the error
-          console.log('save failed');
-    });    
-    
-    item2.save(function (err, item2) {
-      if (err) // TODO handle the error
-          console.log('save failed');
+
+    InventoryItemModel.find({'Sku' : item1.Sku}, function (err,items) {
+        if (items.length>0){
+            res.send(items);
+        }
+        else {
+            item1.save(function (err, item1) {
+              if (err) // TODO handle the error
+                  console.log('save failed');
+            });
+        }
+    });
+
+    InventoryItemModel.find({'Sku' : item2.Sku}, function (err,items) {
+        if (items.length>0){
+            res.send(items);
+        }
+        else {
+            item2.save(function (err, item2) {
+              if (err) // TODO handle the error
+                  console.log('save failed');
+            });
+        }
     });
     
-    ItemModel.find(function (err,items) {
+    
+    InventoryItemModel.find(function (err,items) {
       //console.log(items);
         res.send(items);
     })
@@ -115,9 +125,9 @@ exports.ProvisionCarts = function(req, res) {
         //,LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
     });
 
-    CartModel.find({'hgId' : cart1.hgId}, function (err,items) {
-        if (items.length>0){
-            res.send(items);
+    CartModel.find({'hgId' : cart1.hgId}, function (err,carts) {
+        if (carts.length>0){
+            res.send(carts);
         }
         else{
             cart1.save(function (err, cart1) {
@@ -127,9 +137,9 @@ exports.ProvisionCarts = function(req, res) {
         }
     })
     
-    CartModel.find({'hgId' : cart2.hgId}, function (err,items) {
-        if (items.length>0){
-            res.send(items);
+    CartModel.find({'hgId' : cart2.hgId}, function (err,carts) {
+        if (carts.length>0){
+            res.send(carts);
         }
         else{
             cart2.save(function (err, cart1) {
