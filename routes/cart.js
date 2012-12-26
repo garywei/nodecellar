@@ -104,11 +104,17 @@ exports.ProvisionCarts = function(req, res) {
       , CartModel = mongoose.model('Cart');
 
     var cart1 = new CartModel({
-        hgId : '1',
-        UserId : 'UserId1',
-        LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
+        hgId : '1'
+        ,UserId : 'UserId1'
+        //,LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
     });
     
+    var cart2 = new CartModel({
+        hgId : '2'
+        ,UserId : 'UserId2'
+        //,LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
+    });
+
     CartModel.find({'hgId' : cart1.hgId}, function (err,items) {
         if (items.length>0){
             res.send(items);
@@ -121,5 +127,16 @@ exports.ProvisionCarts = function(req, res) {
         }
     })
     
+    CartModel.find({'hgId' : cart2.hgId}, function (err,items) {
+        if (items.length>0){
+            res.send(items);
+        }
+        else{
+            cart2.save(function (err, cart1) {
+              if (err) // TODO handle the error
+                  console.log('save failed');
+            });            
+        }
+    })
     
 };
