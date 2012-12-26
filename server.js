@@ -14,7 +14,7 @@ db.once('open', function callback () {
 app.get('/wines', wines.findAll);
 app.get('/wines/:id', wines.findById);
 app.get('/carts', cart.findAll);
-//app.get('/carts/findBySku', cart.findBySku);
+app.get('/carts/findBySku/:id', cart.findBySku);
 app.get('/carts/ProvisionItems', cart.ProvisionItems);
  
 app.listen(3000);

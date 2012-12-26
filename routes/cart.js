@@ -31,7 +31,8 @@ exports.findAll = function(req, res) {
 };
 
 exports.findBySku = function(req, res) {
-
+    console.log('findBySku');
+    console.log(req.params.id);
     var mongoose = require('mongoose')
     , Schema = mongoose.Schema;
         
@@ -46,23 +47,16 @@ exports.findBySku = function(req, res) {
     var ItemModel = mongoose.model('Item', ItemSchema);
 
     var ret;
-    ItemModel.find(function (err,items) {
-      console.log(items);
-      ret=items;
+    ItemModel.find({'Sku' : req.params.id}, function (err,items) {      
+        res.send(items);
     })
     
-    //mongoose.connect('mongodb://localhost:27017/cart');    
-    //var db = mongoose.connection;
-    //db.on('error', console.error.bind(console, 'connection error:'));
-    //db.once('open', function callback () {
-    //});
     
-
-    res.send(items);
 };
 
 
 exports.ProvisionItems = function(req, res) {
+    console.log('ProvisionItems');
 
     var mongoose = require('mongoose')
     , Schema = mongoose.Schema;
@@ -98,12 +92,6 @@ exports.ProvisionItems = function(req, res) {
             Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
         });
     
-    //mongoose.connect('mongodb://localhost:27017/cart');    
-    //var db = mongoose.connection;
-    //db.on('error', console.error.bind(console, 'connection error:'));
-    //db.once('open', function callback () {
-    //});
-    
     item1.save(function (err, item1) {
       if (err) // TODO handle the error
           console.log('save failed');
@@ -115,7 +103,7 @@ exports.ProvisionItems = function(req, res) {
     });
     
     ItemModel.find(function (err,items) {
-      console.log(items);
+      //console.log(items);
         res.send(items);
     })
 
