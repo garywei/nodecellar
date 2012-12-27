@@ -13,10 +13,9 @@ db.once('open', function callback () {
 
 app.get('/wines', wines.findAll);
 app.get('/wines/:id', wines.findById);
-app.get('/carts', cart.findAll);
 app.get('/carts/ProvisionCarts', cart.ProvisionCarts);
-app.get('/carts/findBySku/:id', cart.findBySku);
 app.get('/carts/ProvisionItems', cart.ProvisionItems);
+app.get('/carts/findBySku/:id', cart.findBySku);
  
 app.listen(3000);
 console.log('Listening on port 3000...');

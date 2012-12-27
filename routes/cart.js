@@ -1,35 +1,3 @@
-exports.findAll = function(req, res) {
-    var mongoose = require('mongoose');
-    mongoose.connect('mongodb://localhost:27017/cart');    
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    
-    var kittySchema = mongoose.Schema({
-        name: String
-    });
-
-    db.once('open', function callback () {
-    });
-    
-    kittySchema.methods.speak = function () {
-      var greeting = this.name
-        ? "Meow name is " + this.name
-        : "I don't have a name"
-      console.log(greeting);
-    }
-    
-    var Kitten = mongoose.model('Kitten', kittySchema);
-    var fluffy = new Kitten({ name: 'fluffy' });
-    fluffy.speak(); // "Meow name is fluffy"
-    
-    fluffy.save(function (err, fluffy) {
-      if (err) // TODO handle the error
-          fluffy.speak();
-    });    
-    res.send([{name:'ri'}]);
-    db.close();
-};
-
 exports.findBySku = function(req, res) {
     console.log('findBySku');
     console.log(req.params.id);
@@ -125,28 +93,37 @@ exports.ProvisionCarts = function(req, res) {
         //,LineItems : [{Sku : 1234, Quanity : 2}, {Sku : 1235, Quanity : 3}]
     });
 
-    CartModel.find({'hgId' : cart1.hgId}, function (err,carts) {
-        if (carts.length>0){
-            res.send(carts);
+    CartModel.findOne({'hgId' : cart1.hgId}, function (err,carts) {
+        if (carts){
+            console.log(carts);
         }
         else{
             cart1.save(function (err, cart1) {
-              if (err) // TODO handle the error
-                  console.log('save failed');
+                if (err) {// TODO handle the error
+                    console.log('save failed');
+                }
+                else{
+                    console.log('cart saved');
+                }
             });            
         }
     })
     
-    CartModel.find({'hgId' : cart2.hgId}, function (err,carts) {
-        if (carts.length>0){
-            res.send(carts);
+    CartModel.findOne({'hgId' : cart2.hgId}, function (err,carts) {
+        if (carts){
+            console.log(carts);
         }
         else{
             cart2.save(function (err, cart1) {
-              if (err) // TODO handle the error
-                  console.log('save failed');
+                if (err) {// TODO handle the error
+                    console.log('save failed');
+                }
+                else{
+                    console.log('cart saved');
+                }
             });            
         }
     })
+    res.send('Provision carts completed');
     
 };
