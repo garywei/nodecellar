@@ -78,6 +78,22 @@ exports.ProvisionItems = function(req, res) {
     res.send('Provision items completed');
 };
 
+exports.RemoveCarts = function(req, res){
+    console.log('RemoveCarts');
+    require('../models/cart.js');
+    var mongoose = require('mongoose')
+      , CartModel = mongoose.model('Cart');
+      
+    CartModel.find({}, function (err,carts) {
+        for (var i = 0; i< carts.length; i++){
+            var cart = carts[i];
+            cart.remove(function(error, cart){
+            });
+        }
+    });
+    res.send('carts removed');
+};
+
 exports.ProvisionCarts = function(req, res) {
     console.log('ProvisionCarts');
     require('../models/cart.js');

@@ -15,6 +15,7 @@ app.get('/wines', wines.findAll);
 app.get('/wines/:id', wines.findById);
 app.get('/carts/ProvisionCarts', cart.ProvisionCarts);
 app.get('/carts/ProvisionItems', cart.ProvisionItems);
+app.get('/carts/RemoveCarts', cart.RemoveCarts);
 app.get('/carts/findBySku/:id', cart.findBySku);
  
 app.listen(3000);
