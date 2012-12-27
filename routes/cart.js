@@ -30,49 +30,52 @@ exports.ProvisionItems = function(req, res) {
     InventoryItemModel = mongoose.model('InventoryItem');
         
     var item2 = new InventoryItemModel({
-            Sku : '1235',
-            Quanity : 7,
-            Description : 'gift card',
-            Carted : [{CartId : 1, Quanity : 3}, {CartId : 2, Quanity : 1}]
+            Sku : '1235'
+            ,Quanity : 7
+            ,Description : 'gift card'
+            //,Carted : [{CartId : 1, Quanity : 3}, {CartId : 2, Quanity : 1}]
         });
     
     var item1 = new InventoryItemModel({
-            Sku : '1234',
-            Quanity : 5,
-            Description : 'glasses',
-            Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
+            Sku : '1234'
+            ,Quanity : 5
+            ,Description : 'glasses'
+            //,Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
         });
     
 
-    InventoryItemModel.find({'Sku' : item1.Sku}, function (err,items) {
-        if (items.length>0){
-            res.send(items);
+    InventoryItemModel.findOne({'Sku' : item1.Sku}, function (err,items) {
+        if (items){
+            console.log('Item Already exist');
         }
         else {
             item1.save(function (err, item1) {
-              if (err) // TODO handle the error
-                  console.log('save failed');
+                if (err) {// TODO handle the error
+                    console.log('save failed');
+                }
+                else{
+                    console.log('item saved');
+                }
             });
         }
     });
 
-    InventoryItemModel.find({'Sku' : item2.Sku}, function (err,items) {
-        if (items.length>0){
-            res.send(items);
+    InventoryItemModel.findOne({'Sku' : item2.Sku}, function (err,items) {
+        if (items){
+            console.log('Item Already exist');
         }
         else {
             item2.save(function (err, item2) {
-              if (err) // TODO handle the error
-                  console.log('save failed');
+                if (err) {// TODO handle the error
+                    console.log('save failed');
+                }
+                else{
+                    console.log('item saved');
+                }
             });
         }
     });
-    
-    
-    InventoryItemModel.find(function (err,items) {
-      //console.log(items);
-        res.send(items);
-    })
+    res.send('Provision items completed');
 };
 
 exports.ProvisionCarts = function(req, res) {
