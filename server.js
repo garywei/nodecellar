@@ -13,6 +13,8 @@ db.once('open', function callback () {
 
 app.get('/wines', wines.findAll);
 app.get('/wines/:id', wines.findById);
+app.post('/carts/AddItemToCart', cart.AddItemToCart);
+app.post('/carts/RemoveItemToCart', cart.AddItemToCart);
 app.get('/carts/ProvisionCarts', cart.ProvisionCarts);
 app.get('/carts/ProvisionItems', cart.ProvisionItems);
 app.get('/carts/RemoveCarts', cart.RemoveCarts);
