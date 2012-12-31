@@ -1,26 +1,17 @@
 exports.GetAllItems = function(req, res) {
     console.log('GetAllItems');
-    //
-    //require('../models/InventoryItem.js');
-    //var mongoose = require('mongoose')
-    //, Schema = mongoose.Schema;
-    //
-    //InventoryItemModel = mongoose.model('InventoryItem');
-    //    
-    //var item2 = new InventoryItemModel({
-    //        Sku : '1235'
-    //        ,Quanity : 7
-    //        ,Description : 'gift card'
-    //        //,Carted : [{CartId : 1, Quanity : 3}, {CartId : 2, Quanity : 1}]
-    //    });
-    //
-    //var item1 = new InventoryItemModel({
-    //        Sku : '1234'
-    //        ,Quanity : 5
-    //        ,Description : 'glasses'
-    //        //,Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
-    //    });
-    //
+    
+    require('../models/InventoryItem.js');
+    var mongoose = require('mongoose')
+    , Schema = mongoose.Schema;
+    
+    InventoryItemModel = mongoose.model('InventoryItem');
+    
+    InventoryItemModel.find({}, function (err,items) {
+        console.log('items found');
+        res.send(items);
+    });
+
     //
     //InventoryItemModel.findOne({'Sku' : item1.Sku}, function (err,items) {
     //    if (items){
