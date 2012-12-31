@@ -12,56 +12,24 @@ exports.GetAllItems = function(req, res) {
         res.send(items);
     });
 
-    //
-    //InventoryItemModel.findOne({'Sku' : item1.Sku}, function (err,items) {
-    //    if (items){
-    //        console.log('Item Already exist');
-    //    }
-    //    else {
-    //        item1.save(function (err, item1) {
-    //            if (err) {// TODO handle the error
-    //                console.log('save failed');
-    //            }
-    //            else{
-    //                console.log('item saved');
-    //            }
-    //        });
-    //    }
-    //});
-    //
-    //InventoryItemModel.findOne({'Sku' : item2.Sku}, function (err,items) {
-    //    if (items){
-    //        console.log('Item Already exist');
-    //    }
-    //    else {
-    //        item2.save(function (err, item2) {
-    //            if (err) {// TODO handle the error
-    //                console.log('save failed');
-    //            }
-    //            else{
-    //                console.log('item saved');
-    //            }
-    //        });
-    //    }
-    //});
-    //res.send('Provision items completed');
 };
 
-exports.RemoveCarts = function(req, res){
-    console.log('RemoveCarts');
-    require('../models/cart.js');
+exports.GetItemBySku = function(req, res){
+    console.log('GetItemBySku');
+    require('../models/InventoryItem.js');
     var mongoose = require('mongoose')
-      , CartModel = mongoose.model('Cart');
+    , Schema = mongoose.Schema
+    ,InventoryItemModel = mongoose.model('InventoryItem');
       
-    CartModel.find({}, function (err,carts) {
-        for (var i = 0; i< carts.length; i++){
-            var cart = carts[i];
-            cart.remove(function(error, cart){
-            });
-        }
+    InventoryItemModel.findOne({'Sku' : req.params.sku}, function (err,item) {
+        console.log(item);
+        if (item)
+            res.send(item);
+        else
+            res.send('item with given sku not found');
     });
-    res.send('carts removed');
 };
+
 
 exports.ProvisionCarts = function(req, res) {
     console.log('ProvisionCarts');
