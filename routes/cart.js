@@ -19,6 +19,15 @@ exports.findBySku = function(req, res) {
     })
 };
 
+exports.AddItemToCart= function(req, res) {
+    var request = req.body; // cant get this to work. will mock up for now
+    request = {
+        Sku: 123
+        ,Quanity : 2
+    };
+    console.log(request);
+    res.send( JSON.stringify(request));
+};
 
 exports.ProvisionItems = function(req, res) {
     console.log('ProvisionItems');
