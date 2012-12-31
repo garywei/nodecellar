@@ -1,6 +1,7 @@
 var express = require('express'),
     wines = require('./routes/wines');
     cart = require('./routes/cart');
+    inventory = require('./services/inventory');
  
 var app = express();
  
@@ -11,10 +12,22 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 });
 
-app.get('/wines', wines.findAll);
-app.get('/wines/:id', wines.findById);
+// item/inventory management 
+app.get('/inventory/GetAllItems', inventory.GetAllItems);
+app.get('/inventory/GetItemBySku/:sku', inventory.GetItemBySku);
+app.post('/inventory/AddItemToInventory', inventory.AddItemToInventory);
+app.post('/inventory/RemoveItemFromInventory', inventory.AddItemToInventory);
+app.post('/inventory/UpdateItemQuanityInInventory', inventory.UpdateItemQuanityInInventory);
+
+//cart/item management 
+app.get('/carts/GetCartByUserId', cart.GetCartByUserId); // get current user's cart
 app.post('/carts/AddItemToCart', cart.AddItemToCart);
-app.post('/carts/RemoveItemToCart', cart.AddItemToCart);
+app.post('/carts/RemoveItemFromCart', cart.AddItemToCart);
+app.post('/carts/ChangeItemQuanityInCart', cart.ChangeItemQuanityInCart);
+app.post('/carts/ClearExpiredCarts', cart.ClearExpiredCarts);
+app.post('/carts/CheckoutCart', cart.CheckoutCart); 
+
+//provision/cleaning
 app.get('/carts/ProvisionCarts', cart.ProvisionCarts);
 app.get('/carts/ProvisionItems', cart.ProvisionItems);
 app.get('/carts/RemoveCarts', cart.RemoveCarts);
