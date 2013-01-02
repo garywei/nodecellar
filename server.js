@@ -1,6 +1,5 @@
 var express = require('express'),
-    wines = require('./routes/wines');
-    cart = require('./routes/cart');
+    cart = require('./services/cart');
     inventory = require('./services/inventory');
  
 var app = express();
@@ -12,7 +11,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 });
 
-// item/inventory management 
+//item/inventory management 
 app.get('/inventory/GetAllItems', inventory.GetAllItems);
 app.get('/inventory/GetItemBySku/:sku', inventory.GetItemBySku);
 app.post('/inventory/AddItemToInventory', inventory.AddItemToInventory);
