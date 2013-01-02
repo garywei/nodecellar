@@ -24,9 +24,21 @@ exports.AddItemToCart= function(req, res) {
     request = {
         Sku: 123
         ,Quanity : 2
+        ,CartId : '1'
     };
     console.log(request);
-    res.send( JSON.stringify(request));
+    
+    require('../models/cart.js');
+    require('../models/InventoryItem.js');
+    var mongoose = require('mongoose')
+      , CartModel = mongoose.model('Cart')
+      , InventoryItemModel = mongoose.model('InventoryItem');
+    
+     CartModel.findOne({'hgId' : request.CartId}, function (err,cart) {
+        console.log(cart);
+     });
+    
+    res.send(request);
 };
 
 exports.ProvisionItems = function(req, res) {

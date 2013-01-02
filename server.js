@@ -17,12 +17,12 @@ app.get('/inventory/GetAllItems', inventory.GetAllItems);
 app.get('/inventory/GetItemBySku/:sku', inventory.GetItemBySku);
 app.post('/inventory/AddItemToInventory', inventory.AddItemToInventory);
 app.post('/inventory/RemoveItemFromInventory', inventory.AddItemToInventory);
-app.post('/inventory/UpdateItemQuanityInInventory', inventory.UpdateItemQuanityInInventory);
+app.post('/inventory/UpdateItemQ¶uanityInInventory', inventory.UpdateItemQuanityInInventory);
 
 //cart/item management 
 app.get('/carts/GetCartByUserId', cart.GetCartByUserId); // get current user's cart
 app.post('/carts/AddItemToCart', cart.AddItemToCart);
-app.post('/carts/RemoveItemFromCart', cart.AddItemToCart);
+app.post('/carts/RemoveItemFromCart', cart.RemoveItemFromCart);
 app.post('/carts/ChangeItemQuanityInCart', cart.ChangeItemQuanityInCart);
 app.post('/carts/ClearExpiredCarts', cart.ClearExpiredCarts);
 app.post('/carts/CheckoutCart', cart.CheckoutCart); 
