@@ -26,7 +26,7 @@ exports.AddItemToCart= function(req, res) {
         ,Quanity : 2
         ,CartId : '1'
     };
-    console.log(request);
+    //console.log(request);
     
     require('../models/cart.js');
     require('../models/InventoryItem.js');
@@ -36,23 +36,37 @@ exports.AddItemToCart= function(req, res) {
     
     CartModel.findOne({'hgId' : request.CartId}, function (err, cart) {
         if (cart && cart.Status === 'Active') {
-            console.log(cart);
+            //console.log(cart);
             InventoryItemModel.findOne({'Sku' : request.Sku}, function (err,item) {
                 if (item){
-                    console.log(item);
+                    //console.log(item);
                     if (item.Quanity < request.Quanity) {
                         throw 'Insufficient item remaining in inventory';
                     }
                     else {
                         var lineItem = {Sku : request.Sku, Quanity : request.Quanity};
-                        cart.LineItems.push(lineItem);
-                        item.Quanity -= request.Quanity;
-                        item.save(function (err, item) {
+                        //console.log(cart.LineItems);
+                        var itemInCart = false;
+                        for (var i =0 ; i<cart.LineItems.length; i++)
+                        {
+                            if (cart.LineItems[i].Sku === request.Sku)
+                            {
+                                itemInCart = true;
+                                cart.LineItems[i].Quanity+=request.Quanity;
+                            }
+                        }
+                        if (!itemInCart) {
+                            cart.LineItems.push(lineItem);
+                        }
+                        console.log(cart);
+                        cart.save(function (err, item) {
                             if (err) {// TODO handle the error
                                 console.log('save failed');
                             }
                         });
-                        cart.save(function (err, item) {
+
+                        item.Quanity -= request.Quanity;
+                        item.save(function (err, item) {
                             if (err) {// TODO handle the error
                                 console.log('save failed');
                             }
