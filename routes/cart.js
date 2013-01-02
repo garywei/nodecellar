@@ -34,9 +34,22 @@ exports.AddItemToCart= function(req, res) {
       , CartModel = mongoose.model('Cart')
       , InventoryItemModel = mongoose.model('InventoryItem');
     
-     CartModel.findOne({'hgId' : request.CartId}, function (err,cart) {
-        console.log(cart);
-     });
+    CartModel.findOne({'hgId' : request.CartId}, function (err, cart) {
+        if (cart) {
+            console.log(cart);
+            InventoryItemModel.findOne({'Sku' : request.Sku}, function (err,item) {
+                if (item){
+                    console.log(item);
+                }
+                else {
+                    throw 'Invalid item sku';
+                }
+            });
+        }
+        else {
+            throw 'Invalid cart Id!';
+        }
+    });
     
     res.send(request);
 };
