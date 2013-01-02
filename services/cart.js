@@ -19,6 +19,23 @@ exports.findBySku = function(req, res) {
     })
 };
 
+exports.GetCartByUserId = function(req, res) {
+    console.log('GetCartByUserId');
+    console.log(req.params.UserId);
+    require('../models/cart.js');
+    var mongoose = require('mongoose')
+    , Schema = mongoose.Schema
+    , CartModel = mongoose.model('Cart')
+      
+    CartModel.findOne({'UserId' : req.params.UserId}, function (err,cart) {
+        console.log(cart);
+        if (cart)
+            res.send(cart);
+        else
+            res.send('cart with given UserId not found');
+    });
+};
+
 exports.AddItemToCart= function(req, res) {
     var request = req.body; // cant get this to work. will mock up for now
     request = {
