@@ -22,7 +22,7 @@ exports.findBySku = function(req, res) {
 exports.AddItemToCart= function(req, res) {
     var request = req.body; // cant get this to work. will mock up for now
     request = {
-        Sku: 123
+        Sku: 1234
         ,Quanity : 2
         ,CartId : '1'
     };
@@ -35,11 +35,29 @@ exports.AddItemToCart= function(req, res) {
       , InventoryItemModel = mongoose.model('InventoryItem');
     
     CartModel.findOne({'hgId' : request.CartId}, function (err, cart) {
-        if (cart) {
+        if (cart && cart.Status === 'Active') {
             console.log(cart);
             InventoryItemModel.findOne({'Sku' : request.Sku}, function (err,item) {
                 if (item){
                     console.log(item);
+                    if (item.Quanity < request.Quanity) {
+                        throw 'Insufficient item remaining in inventory';
+                    }
+                    else {
+                        var lineItem = {Sku : request.Sku, Quanity : request.Quanity};
+                        cart.LineItems.push(lineItem);
+                        item.Quanity -= request.Quanity;
+                        item.save(function (err, item) {
+                            if (err) {// TODO handle the error
+                                console.log('save failed');
+                            }
+                        });
+                        cart.save(function (err, item) {
+                            if (err) {// TODO handle the error
+                                console.log('save failed');
+                            }
+                        });
+                    }
                 }
                 else {
                     throw 'Invalid item sku';
