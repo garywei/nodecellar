@@ -39,7 +39,7 @@ exports.GetCartByUserId = function(req, res) {
 exports.AddItemToCart= function(req, res) {
     var request = req.body; // cant get this to work. will mock up for now
     request = {
-        Sku: 1234
+        Sku: '1234'
         ,Quanity : 2
         ,CartId : '1'
     };
@@ -66,18 +66,19 @@ exports.AddItemToCart= function(req, res) {
                         var itemInCart = false;
                         for (var i =0 ; i<cart.LineItems.length; i++)
                         {
+                            console.log(cart.LineItems[i]);
                             if (cart.LineItems[i].Sku === request.Sku)
                             {
                                 console.log('item is in cart');
                                 itemInCart = true;
-                                lineItem.Quanity+=cart.LineItems[i].Quanity;
-                                cart.LineItems.splice(i, 1);
-                                //cart.LineItems[i].Quanity+=request.Quanity;
+                                //lineItem.Quanity+=cart.LineItems[i].Quanity;
+                                //cart.LineItems.splice(i, 1);
+                                cart.LineItems[i].Quanity+=request.Quanity;
                             }
                         }
-                        //if (!itemInCart) {
+                        if (!itemInCart) {
                             cart.LineItems.push(lineItem);
-                        //}
+                        }
                         cart.ModifiedDate = new Date();
                         cart.save(function (err, cart) {
                             if (err) {// TODO handle the error
@@ -118,14 +119,14 @@ exports.ProvisionItems = function(req, res) {
         
     var item2 = new InventoryItemModel({
             Sku : '1235'
-            ,Quanity : 7
+            ,Quanity : 700
             ,Description : 'gift card'
             //,Carted : [{CartId : 1, Quanity : 3}, {CartId : 2, Quanity : 1}]
         });
     
     var item1 = new InventoryItemModel({
             Sku : '1234'
-            ,Quanity : 5
+            ,Quanity : 500
             ,Description : 'glasses'
             //,Carted : [{CartId : 1, Quanity : 2}, {CartId : 2, Quanity : 3}]
         });
