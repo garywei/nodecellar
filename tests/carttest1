@@ -4,4 +4,7 @@ curl -i -X POST -H 'Content-Type: application/json' -d '{  "Sku": "1235", "Quani
 
 curl -i -X POST -H 'Content-Type: application/json' -d '{  "CartId": "1"}' http://localhost:3000/carts/CheckoutCart
 
+curl -i -X POST -H 'Content-Type: application/json' -d '{"Sku" : '1236', "Quanity" : 50, "Description" : 'Vitamin water' }' http://localhost:3000/inventory/AddItemToInventory
+
+curl -i -X POST -H 'Content-Type: application/json' -d '{  "Sku": "1235", "Quanity": 2, "CartId": "1"}' http://localhost:3000/inventory/AddItemToInventory
 

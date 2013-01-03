@@ -14,9 +14,9 @@ db.once('open', function callback () {
 //item/inventory management 
 app.get('/inventory/GetAllItems', inventory.GetAllItems);
 app.get('/inventory/GetItemBySku/:sku', inventory.GetItemBySku);
-app.post('/inventory/AddItemToInventory', inventory.AddItemToInventory);
-app.post('/inventory/RemoveItemFromInventory', inventory.AddItemToInventory);
-app.post('/inventory/UpdateItemQ¶uanityInInventory', inventory.UpdateItemQuanityInInventory);
+app.post('/inventory/AddItemToInventory', express.bodyParser(), inventory.AddItemToInventory);
+app.post('/inventory/RemoveItemFromInventory', express.bodyParser(), inventory.AddItemToInventory);
+app.post('/inventory/UpdateItemQuanityInInventory', express.bodyParser(), inventory.UpdateItemQuanityInInventory);
 
 //cart/item management 
 app.get('/carts/GetCartByUserId/:UserId', cart.GetCartByUserId); // get current user's cart
