@@ -38,11 +38,11 @@ exports.GetCartByUserId = function(req, res) {
 
 exports.AddItemToCart= function(req, res) {
     var request = req.body; // cant get this to work. will mock up for now
-    request = {
-        Sku: '1234'
-        ,Quanity : 2
-        ,CartId : '1'
-    };
+    //request = {
+    //    Sku: '1235'
+    //    ,Quanity : 2
+    //    ,CartId : '1'
+    //};
     //console.log(request);
     
     require('../models/cart.js');
@@ -66,10 +66,10 @@ exports.AddItemToCart= function(req, res) {
                         var itemInCart = false;
                         for (var i =0 ; i<cart.LineItems.length; i++)
                         {
-                            console.log(cart.LineItems[i]);
+                            //console.log(cart.LineItems[i]);
                             if (cart.LineItems[i].Sku === request.Sku)
                             {
-                                console.log('item is in cart');
+                                //console.log('item is in cart');
                                 itemInCart = true;
                                 //lineItem.Quanity+=cart.LineItems[i].Quanity;
                                 //cart.LineItems.splice(i, 1);

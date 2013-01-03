@@ -1,5 +1,6 @@
 curl -i -X GET http://localhost:3000/inventory/GetAllItems
 
-curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "New Wine", "year": "2010"}' http://localhost:3000/carts/AddItemToCart
+curl -i -X POST -H 'Content-Type: application/json' -d '{  "Sku": "1235", "Quanity": 2, "CartId": "1"}' http://localhost:3000/carts/AddItemToCart
 
-curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "New Wine", "year": "2009"}' http://localhost:3000/wines
+
+

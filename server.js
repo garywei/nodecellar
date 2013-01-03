@@ -20,7 +20,7 @@ app.post('/inventory/UpdateItemQ¶uanityInInventory', inventory.UpdateItemQuanity
 
 //cart/item management 
 app.get('/carts/GetCartByUserId/:UserId', cart.GetCartByUserId); // get current user's cart
-app.post('/carts/AddItemToCart', cart.AddItemToCart);
+app.post('/carts/AddItemToCart', express.bodyParser(), cart.AddItemToCart);
 app.post('/carts/RemoveItemFromCart', cart.RemoveItemFromCart);
 app.post('/carts/ChangeItemQuanityInCart', cart.ChangeItemQuanityInCart);
 app.post('/carts/ClearExpiredCarts', cart.ClearExpiredCarts);
