@@ -19,6 +19,14 @@ CartSchema.path('UserId').validate(function (UserId) {
 
 CartSchema.methods.CheckoutMe = function(){
   console.log('CheckoutMe');
+  this.Status = 'Pending';
+  this.save(function (err, cart) {
+    if (err) {// TODO handle the error
+      console.log('save failed');
+    }
+
+  });
+  
   console.log(this.Status);
 }
 
