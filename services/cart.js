@@ -68,18 +68,22 @@ exports.AddItemToCart= function(req, res) {
                         {
                             if (cart.LineItems[i].Sku === request.Sku)
                             {
+                                console.log('item is in cart');
                                 itemInCart = true;
-                                cart.LineItems[i].Quanity+=request.Quanity;
+                                lineItem.Quanity+=cart.LineItems[i].Quanity;
+                                cart.LineItems.splice(i, 1);
+                                //cart.LineItems[i].Quanity+=request.Quanity;
                             }
                         }
-                        if (!itemInCart) {
+                        //if (!itemInCart) {
                             cart.LineItems.push(lineItem);
-                        }
-                        console.log(cart);
-                        cart.save(function (err, item) {
+                        //}
+                        cart.ModifiedDate = new Date();
+                        cart.save(function (err, cart) {
                             if (err) {// TODO handle the error
                                 console.log('save failed');
                             }
+                            console.log(cart);
                         });
 
                         item.Quanity -= request.Quanity;
