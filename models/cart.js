@@ -17,4 +17,9 @@ CartSchema.path('UserId').validate(function (UserId) {
   return UserId.length > 0
 }, 'User Id cannot be blank')
 
+CartSchema.methods.CheckoutMe = function(){
+  console.log('CheckoutMe');
+  console.log(this.Status);
+}
+
 mongoose.model('Cart', CartSchema);

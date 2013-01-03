@@ -24,7 +24,7 @@ app.post('/carts/AddItemToCart', express.bodyParser(), cart.AddItemToCart);
 app.post('/carts/RemoveItemFromCart', cart.RemoveItemFromCart);
 app.post('/carts/ChangeItemQuanityInCart', cart.ChangeItemQuanityInCart);
 app.post('/carts/ClearExpiredCarts', cart.ClearExpiredCarts);
-app.post('/carts/CheckoutCart', cart.CheckoutCart); 
+app.get('/carts/CheckoutCart/:CartId', cart.CheckoutCart); 
  
 //provision/cleaning
 app.get('/carts/ProvisionCarts', cart.ProvisionCarts);

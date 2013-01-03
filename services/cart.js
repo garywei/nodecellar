@@ -36,14 +36,21 @@ exports.GetCartByUserId = function(req, res) {
     });
 };
 
+exports.CheckoutCart = function(req, res) {
+    var mongoose = require('mongoose')
+    require('../models/cart.js');
+    CartModel = mongoose.model('Cart');
+    CartModel.findOne({'hgId' : req.params.CartId}, function (err, cart) {
+        cart.CheckoutMe(function (err, carts){
+            console.log('Checkout call back');
+        });
+    });
+    
+    res.send(req.params.CartId);
+};
+
 exports.AddItemToCart= function(req, res) {
     var request = req.body; // cant get this to work. will mock up for now
-    //request = {
-    //    Sku: '1235'
-    //    ,Quanity : 2
-    //    ,CartId : '1'
-    //};
-    //console.log(request);
     
     require('../models/cart.js');
     require('../models/InventoryItem.js');
